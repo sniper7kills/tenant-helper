@@ -18,7 +18,23 @@ composer require sniper7kills/tenant-helper --dev
 ```
 php artisan tenant:init
 ```
+**Setup Composer**
 
+Update the `autoload` section of your `composer.json` file to include the new Tenant Namespace.
+
+I.E.
+```
+    ...
+    
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "App\\Tenant\\": "Tenant/",
+        },
+        
+    ...
+   
+```
 ## Folder Structure
 ```
 app

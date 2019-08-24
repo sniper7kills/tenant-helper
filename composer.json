@@ -1,0 +1,11 @@
+{
+    "name": "sniper7kills/tenant-helper",
+    "description": "A package to help setup and create files when using tenancy/tenancy",
+    "type": "tool package",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "sniper7kills\\tenantHelper\\": "src/"
+        }
+    }
+}

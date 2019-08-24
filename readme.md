@@ -10,7 +10,7 @@ php artisan app:name
 
 **Installation**
 ```
-composer require sniper7kills/tenant-helper
+composer require sniper7kills/tenant-helper --dev
 ```
 **Setup folder structure**
 ```

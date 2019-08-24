@@ -64,4 +64,4 @@ These are duplicates of laravel's built in `make:` commands and will reproduce t
     This command will put the controller in the `Http\Controllers\Api` folder.
 1) `tenant:model`
 
-    This command will automatically add the `onTenant` trait to the model; to disable this functionality use `tenant:model -not`
+    This command will automatically add the `onTenant` trait to the model; to disable this functionality use `tenant:model --not`

@@ -3,9 +3,9 @@
 namespace sniper7kills\tenantHelper\Commands;
 
 use Illuminate\Foundation\Console\ModelMakeCommand;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
 use sniper7kills\tenantHelper\TenantApplication;
+use Symfony\Component\Console\Input\InputOption;
 
 class ModelCommand extends ModelMakeCommand
 {
@@ -26,7 +26,7 @@ class ModelCommand extends ModelMakeCommand
     /**
      * Execute the console command.
      *
-     * @return mixed
+     * @return void
      */
     public function handle()
     {
@@ -37,8 +37,30 @@ class ModelCommand extends ModelMakeCommand
         $ta->useAppPath($ta->basePath().'/Tenant');
         $this->setLaravel($ta);
 
+        $this->getStub();
 
         parent::handle();
+
+        if(!$this->hasOption('not'))
+            $this->addOnTenantTrait();
+    }
+
+    private function addOnTenantTrait()
+    {
+        $path = $this->getPath($this->qualifyClass($this->getNameInput()));
+        $file = file_get_contents($path);
+
+        $pattern = "/\nclass/";
+        $replacement = "use Tenancy\Eloquent\Connection\OnTenant;\n\nclass";
+        $file = preg_replace($pattern, $replacement, $file);
+
+        $pattern = "/Model\n{\n/";
+        $replacement = "Model\n{\n    use OnTenant;\n\n";
+        $file = preg_replace($pattern, $replacement, $file);
+
+        file_put_contents($path,$file);
+
+        return;
     }
 
     /**
@@ -90,5 +112,17 @@ class ModelCommand extends ModelMakeCommand
             'name' => "{$controller}Controller",
             '--model' => $this->option('resource') ? $modelName : null,
         ]);
+    }
+
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        $options = parent::getOptions();
+        $options[] = ['not', 't', InputOption::VALUE_NONE, 'Do Not add the onTenant trait to model'];
+        return $options;
     }
 }

@@ -1,12 +1,14 @@
 # Tenant Helper
 This package is intended to help when developing with the `tenancy/tenancy` package.
 
-## Setup & Use
+## Pre-Install
+If you plan on changing the app name, it is recommended that you do so before using this package.
 
-It is recommended that you rename your app prior to installation of this package if you intend to do so.
+***Running the below command will NOT update the namespace on any files created by this project***
 ```
 php artisan app:name
 ```
+## Setup & Use
 
 **Installation**
 ```
@@ -60,3 +62,6 @@ These are duplicates of laravel's built in `make:` commands and will reproduce t
 1) `tenant:controller --api`
     
     This command will put the controller in the `Http\Controllers\Api` folder.
+1) `tenant:model`
+
+    This command will automatically add the `onTenant` trait to the model; to disable this functionality use `tenant:model -not`
